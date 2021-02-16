@@ -29,3 +29,24 @@ jobs:
 
       - name: Run coding standards check
         run: composer run cs:check
+  
+  front-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+        matrix:
+          node-version: ['stable']
+          databases: ['sqlite']
+          server-version: ['stable20']
+      
+    name: jscsslint check js${{ matrix.node-version }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Check Lint
+        run: npm run lint
